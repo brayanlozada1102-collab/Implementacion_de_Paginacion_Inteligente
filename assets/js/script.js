@@ -1,89 +1,168 @@
-// URL endpoint 
-const url_api = "https://rickandmortyapi.com/api/character";
-
-// /** 
-// *requestData
-// *Send request to Endpoint
-// *@param { string } url_api */
-// async function requestData(url_api) {
-//     const response = await fetch(url_api);
-//     let data = await response.json();
-//     getElementButton(document, 'set', data.info)
-//     renderHtml(data);
-// }
-// function requestData(url) {
-//   return axios.get(url)
-//     .then(response => response.data)
-//     .catch(error => {
-//       console.error("Error en la API:", error);
-//       throw error;
-//     });
-// }
-const data = await axios.get(url_api)
-    .then(response => {
-        let data = response.data
-        getElementButton(document, 'set', data.info)
-        renderHtml(data)
-        console.log(data.info)
-        return data
-
-    })
-    .catch(error => {
-        console.error("Hubo un error en la petición:", error);
-    });
-/**
-*loadMore
-*Call @Function getElementButton */
-function loadMore() {
-    getElementButton(document, 'get')
-}
-
-/**
-*getElementButton
-*@param {object} elementButton
-*@param {object} button
-*@param {string} operation*/
+let url_api = "https://rickandmortyapi.com/api/character";
 
 
-function getElementButton(elementButton, operation = 'get', info = null) {
-    const button = elementButton.getElementById("loadMore");
-    if (operation == 'get') {
-        const next = button.getAttribute("data-next");
-        if (next == "" || next == null) {
-            console.log("No hay url")
+let originalCharacters = [];
 
-        } else {
-            renderHtml(data);
 
-        }
-    } else {
-        button.setAttribute("data-next", (info.next == null) ? '' : info.next)
-        button.setAttribute("data-prev", (info.prev == null) ? '' : info.prev)
+
+let list = document.getElementById("character");
+let btnNext = document.getElementById("btnNext");
+let btnPrev = document.getElementById("btnPrev");
+let pageText = document.getElementById("page-info");
+let filterButtons = document.querySelectorAll(".filter-btn");
+
+let activeFilter = "all";
+
+
+// ======================================================
+// REQUEST DATA
+// ======================================================
+
+async function requestData(url) {
+    try {
+        const response = await axios.get(url);
+
+        let apiData = response.data;
+        originalCharacters = apiData.results;
+
+        let next = apiData.info.next;
+        let prev = apiData.info.prev;
+
+        setButtons(apiData.info);
+        renderHtml(apiData);
+
+    } catch (error) {
+        console.error("Request error:", error);
     }
-
 }
 
-/**
-*renderHtml
-*@param {object} element
-*@param {object} data
-*/
+requestData(url_api);
+
+// ======================================================
+// BUTTONS (NEXT / PREV)
+// ======================================================
+
+function setButtons(info) {
+
+    btnPrev.disabled = (info.prev === null);
+    btnNext.disabled = (info.next === null);
+
+    btnNext.onclick = function () {
+        if (info.next) {
+            requestData(info.next);
+        }
+    };
+
+    btnPrev.onclick = function () {
+        if (info.prev) {
+            requestData(info.prev);
+        }
+    };
+
+    let match = info.next ? info.next.match(/page=(\d+)/) : null;
+    let currentPage = match ? parseInt(match[1]) - 1 : info.pages;
+
+    pageText.textContent = "Page " + currentPage + " of " + info.pages;
+}
+
+
+// ======================================================
+// RENDER
+// ======================================================
 
 function renderHtml(data) {
-    let element = document.getElementById("character");
-    let resultCount = data.results.length;
 
-    for (let index = 0; index < resultCount; index++) {
-        let character = data.results[index];
+    list.innerHTML = "";
 
-        element.innerHTML += `<li>
-            <img src="${character.image}" alt="${character.name}">
-                <h2>${character.name}</h2>
-                <span>${character.gender}</span>
-        </li>`;
+    let characters = data.results;
+
+    if (activeFilter !== "all") {
+        characters = filterByGender(activeFilter);
     }
 
+    for (let i = 0; i < characters.length; i++) {
+
+        let c = characters[i];
+
+        let html = `
+        <li>
+            <img src="${c.image}">
+            <h3>${c.name}</h3>
+            <p>${c.gender}</p>
+        </li>
+        `;
+
+        list.innerHTML += html;
+    }
 }
 
 
-// const response = requestData(url_api);
+// ======================================================
+// FILTERS (NO FOREACH)
+// ======================================================
+console.log(filterButtons)
+for (let i = 0; i < filterButtons.length; i++) {
+
+    filterButtons[i].onclick = function () {
+
+        let gender = this.dataset.gender;
+        activeFilter = gender;
+
+        for (let j = 0; j < filterButtons.length; j++) {
+            filterButtons[j].classList.remove("active");
+        }
+
+        this.classList.add("active");
+
+        let filtered = filterByGender(gender);
+        renderList(filtered);
+    };
+    
+}
+
+
+// ======================================================
+// FILTER FUNCTION
+// ======================================================
+
+function filterByGender(gender) {
+
+    if (gender === "all") return originalCharacters;
+
+    let result = [];
+
+    for (let i = 0; i < originalCharacters.length; i++) {
+
+        let c = originalCharacters[i];
+        if (c.gender.toLowerCase() === gender.toLowerCase()) {
+            result.push(c);
+        }
+    }
+    return result;
+}
+
+
+// ======================================================
+// RENDER FILTERED LIST
+// ======================================================
+
+function renderList(filteredList) {
+
+    list.innerHTML = "";
+
+    for (let i = 0; i < filteredList.length; i++) {
+
+        let c = filteredList[i];
+
+        let html = `
+        <li>
+            <img src="${c.image}">
+            <h3>${c.name}</h3>
+            <p>${c.gender}</p>
+        </li>
+        `;
+
+        list.innerHTML += html;
+    }
+}
+
