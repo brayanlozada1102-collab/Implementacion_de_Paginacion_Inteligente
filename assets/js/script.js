@@ -4,7 +4,6 @@ let url_api = "https://rickandmortyapi.com/api/character";
 let originalCharacters = [];
 
 
-
 let list = document.getElementById("character");
 let btnNext = document.getElementById("btnNext");
 let btnPrev = document.getElementById("btnPrev");
@@ -94,6 +93,30 @@ function renderHtml(data) {
 
         list.innerHTML += html;
     }
+}
+let personajesOriginales = [];
+let filtroActivo = "all";
+
+/**
+*
+*@param {string} genero 
+*@returns {Array}*/
+function filtrarPorGenero(genero) {
+    if (genero === "all") {
+        return personajesOriginales;
+    }
+
+    let resultado = [];
+
+    for (let i = 0; i < personajesOriginales.length; i++) {
+        let personaje = personajesOriginales[i];
+
+        if (personaje.gender.toLowerCase() === genero.toLowerCase()) {
+            resultado.push(personaje);
+        }
+    }
+
+    return resultado;
 }
 
 
