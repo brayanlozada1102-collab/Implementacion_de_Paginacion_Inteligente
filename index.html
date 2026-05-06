@@ -1,24 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
     <main>
+        <section class="filters">
+            <button class="filter-btn active" data-gender="all">Todos</button>
+            <button class="filter-btn" data-gender="Male">Male</button>
+            <button class="filter-btn" data-gender="Female">Female</button>
+            <button class="filter-btn" data-gender="unknown">Unknown</button>
+        </section>
         <ul id="character"></ul>
         <div>
-            <button id="loadMore" data-next="" data-prev="" onclick="loadMore()">Cargar más</button>
+            <button id="loadMore" data-next="" data-prev="" onclick="loadMore()">
+                Cargar más
+            </button>
             <!-- <button id="loadMore" data-next="" data-prev="" onclick="loadMore()">prev page</button> -->
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/axios@1.16.0/dist/axios.min.js"></script>
-    <script type="module" src="assets/js/script.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>

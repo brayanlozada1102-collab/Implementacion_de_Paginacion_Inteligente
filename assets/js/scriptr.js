@@ -11,25 +11,27 @@ const url_api = "https://rickandmortyapi.com/api/character";
 //     getElementButton(document, 'set', data.info)
 //     renderHtml(data);
 // }
-// function requestData(url) {
-//   return axios.get(url)
-//     .then(response => response.data)
-//     .catch(error => {
-//       console.error("Error en la API:", error);
-//       throw error;
-//     });
-// }
 async function requestData(url) {
-    try {
-        const response = await axios.get(url);
-        apiData = response.data; // Guardamos los datos reales aquí
-        getElementButton(document, 'set', apiData.info);
-        renderHtml(apiData);
-    } catch (error) {
-        console.error("Hubo un error en la petición:", error);
-    }
+    return await axios.get(url)
+        .then(response => response.data)
+        .catch(error => {
+            console.error("Error en la API:", error);
+            throw error;
+        });
 }
-requestData(url_api);
+console.log(requestData(url_api))
+// const data = await axios.get(url_api)
+//     .then(response => {
+//         let data = response.data
+//         getElementButton(document, 'set', data.info)
+//         renderHtml(data)
+//         console.log(data.info)
+    //     return data
+
+    // })
+//     .catch (error => {
+//     console.error("Hubo un error en la petición:", error);
+// });
 /**
 *loadMore
 *Call @Function getElementButton */
@@ -52,7 +54,7 @@ function getElementButton(elementButton, operation = 'get', info = null) {
             console.log("No hay url")
 
         } else {
-            renderHtml(apiData);
+            renderHtml(data);
 
         }
     } else {
@@ -82,30 +84,6 @@ function renderHtml(data) {
         </li>`;
     }
 
-}
-let personajesOriginales = [];
-let filtroActivo = "all";
-
-/**
-*
-*@param {string} genero 
-*@returns {Array}*/
-function filtrarPorGenero(genero) {
-    if (genero === "all") {
-        return personajesOriginales;
-    }
-
-    let resultado = [];
-
-    for (let i = 0; i < personajesOriginales.length; i++) {
-        let personaje = personajesOriginales[i];
-
-        if (personaje.gender.toLowerCase() === genero.toLowerCase()) {
-            resultado.push(personaje);
-        }
-    }
-
-    return resultado;
 }
 
 
