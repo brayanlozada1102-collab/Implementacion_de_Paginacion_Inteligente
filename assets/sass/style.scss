@@ -1,0 +1,86 @@
+// Variables para facilitar cambios globales
+$primary-bg: rgb(80, 94, 80);
+$accent-color: green;
+$hover-color: greenyellow;
+$dark-bg: black;
+$text-light: white;
+$header-height: 65px;
+
+// Mixin para centrar con flex (opcional, para reutilizar)
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; // Buena práctica añadida
+}
+
+body {
+    background-color: $primary-bg;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+header {
+    @include flex-center;
+    height: $header-height;
+    background-color: $dark-bg;
+    color: $text-light;
+    position: fixed;
+    width: 100%;
+    box-shadow: 1px 1px 15px 1px $accent-color;
+    z-index: 1000; // Para asegurar que quede arriba
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    gap: 100px;
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    ul {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1%;
+        margin-top: $header-height + 5px;
+        width: 90%;
+        height: auto;
+        overflow-y: auto;
+        scrollbar-width: none;
+        list-style: none; // Quita los puntos de la lista
+
+        li {
+            background-color: $dark-bg;
+            @include flex-center;
+            flex-direction: column;
+            padding: 10%;
+            height: 400px;
+            color: $text-light;
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+
+            &:hover {
+                transform: scale(1.02);
+                box-shadow: 1px 1px 15px 1px $accent-color;
+                color: $hover-color;
+            }
+        }
+    }
+}
+
+button {
+    @include flex-center;
+}
