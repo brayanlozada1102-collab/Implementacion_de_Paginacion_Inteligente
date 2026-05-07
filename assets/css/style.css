@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Audiowide", Arial, sans-serif;
   background-color: #1e1e2f;
   color: #ffffff;
   text-align: center;
@@ -40,7 +40,8 @@ header {
   backdrop-filter: blur(10px);
 }
 header h1 {
-  color: #00b5cc;
+  color: #00cc00;
+  font-size: 3.5rem;
   margin-bottom: 5px;
 }
 header p {
@@ -59,11 +60,11 @@ header p {
   transition: 0.2s;
 }
 .filter-btn:hover {
-  background-color: #00b5cc;
+  background-color: #00cc00;
 }
 
 .active {
-  background-color: #00b5cc;
+  background-color: #00cc00;
 }
 
 #page-info {
@@ -112,7 +113,7 @@ header p {
 }
 
 button {
-  background-color: #00b5cc;
+  background-color: #00cc00;
   border: none;
   padding: 10px 15px;
   margin: 10px;

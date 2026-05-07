@@ -2,11 +2,12 @@
 // COLORS
 // ======================================================
 
-$primary: #00b5cc;
+$primary: #00cc00;
 $dark: #1e1e2f;
 $card: #2f2f3a;
 $text-light: #cccccc;
 $white: #ffffff;
+$font-family: "Audiowide", Arial, sans-serif;
 
 
 // ======================================================
@@ -25,7 +26,7 @@ $white: #ffffff;
 // ======================================================
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: $font-family;
   background-color: $dark;
   color: $white;
   text-align: center;
@@ -72,6 +73,7 @@ header {
 
   h1 {
     color: $primary;
+    font-size: 3.5rem;
     margin-bottom: 5px;
   }
 
