@@ -49,12 +49,24 @@ function setButtons(info) {
     btnNext.onclick = function () {
         if (info.next) {
             requestData(info.next);
+            let loading = document.querySelector(".loading");
+            loading.classList.toggle("show");
+
+            setTimeout(() => {
+                loading.classList.remove("show");
+            }, 1000);
         }
     };
 
     btnPrev.onclick = function () {
         if (info.prev) {
             requestData(info.prev);
+            let loading = document.querySelector(".loading");
+            loading.classList.toggle("show");
+
+            setTimeout(() => {
+                loading.classList.remove("show");
+            }, 1000);
         }
     };
 
@@ -81,44 +93,19 @@ function renderHtml(data) {
 
     for (let i = 0; i < characters.length; i++) {
 
-        let c = characters[i];
+        let character = characters[i];
 
         let html = `
         <li>
-            <img src="${c.image}">
-            <h3>${c.name}</h3>
-            <p>${c.gender}</p>
+            <img src="${character.image}">
+            <h3>${character.name}</h3>
+            <p>${character.gender}</p>
         </li>
         `;
 
         list.innerHTML += html;
     }
 }
-let personajesOriginales = [];
-let filtroActivo = "all";
-
-/**
-*
-*@param {string} genero 
-*@returns {Array}*/
-function filtrarPorGenero(genero) {
-    if (genero === "all") {
-        return personajesOriginales;
-    }
-
-    let resultado = [];
-
-    for (let i = 0; i < personajesOriginales.length; i++) {
-        let personaje = personajesOriginales[i];
-
-        if (personaje.gender.toLowerCase() === genero.toLowerCase()) {
-            resultado.push(personaje);
-        }
-    }
-
-    return resultado;
-}
-
 
 // ======================================================
 // FILTERS (NO FOREACH)
@@ -140,7 +127,7 @@ for (let i = 0; i < filterButtons.length; i++) {
         let filtered = filterByGender(gender);
         renderList(filtered);
     };
-    
+
 }
 
 
@@ -156,9 +143,9 @@ function filterByGender(gender) {
 
     for (let i = 0; i < originalCharacters.length; i++) {
 
-        let c = originalCharacters[i];
-        if (c.gender.toLowerCase() === gender.toLowerCase()) {
-            result.push(c);
+        let character = originalCharacters[i];
+        if (character.gender.toLowerCase() === gender.toLowerCase()) {
+            result.push(character);
         }
     }
     return result;
@@ -175,13 +162,13 @@ function renderList(filteredList) {
 
     for (let i = 0; i < filteredList.length; i++) {
 
-        let c = filteredList[i];
+        let character = filteredList[i];
 
         let html = `
         <li>
-            <img src="${c.image}">
-            <h3>${c.name}</h3>
-            <p>${c.gender}</p>
+            <img src="${character.image}">
+            <h3>${character.name}</h3>
+            <p>${character.gender}</p>
         </li>
         `;
 
