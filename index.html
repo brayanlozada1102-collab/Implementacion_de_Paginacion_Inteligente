@@ -13,24 +13,26 @@
     <!-- HEADER -->
     <header>
         <h1>Rick & Morty</h1>
+        <!-- FILTERS -->
+        <section>
+            <button class="filter-btn active" data-gender="all">All</button>
+            <button class="filter-btn" data-gender="Male">Male</button>
+            <button class="filter-btn" data-gender="Female">Female</button>
+            <button class="filter-btn" data-gender="unknown">Unknown</button>
+        </section>
+        <!-- PAGE INFO -->
+        <p id="page-info"></p>
     </header>
 
-    <!-- FILTERS -->
-    <section>
-        <button class="filter-btn active" data-gender="all">All</button>
-        <button class="filter-btn" data-gender="Male">Male</button>
-        <button class="filter-btn" data-gender="Female">Female</button>
-        <button class="filter-btn" data-gender="unknown">Unknown</button>
-    </section>
 
-    <!-- PAGE INFO -->
-    <p id="page-info"></p>
+
+
 
     <!-- CHARACTER LIST -->
     <ul id="character"></ul>
 
     <!-- PAGINATION -->
-    <div>
+    <div class="pagination">
         <button id="btnPrev" disabled>Previous</button>
         <button id="btnNext" disabled>Next</button>
     </div>

@@ -14,6 +14,12 @@ body {
 
 header {
   margin-bottom: 20px;
+  top: 0;
+  z-index: 999;
+  position: sticky;
+  background-color: rgba(30, 30, 47, 0.5882352941);
+  padding: 20px;
+  backdrop-filter: blur(10px);
 }
 header h1 {
   color: #00b5cc;
@@ -77,6 +83,14 @@ header p {
 #character li p {
   font-size: 14px;
   color: #cccccc;
+}
+
+.pagination {
+  bottom: 0;
+  z-index: 999;
+  position: sticky;
+  background-color: #1e1e2f;
+  padding: 20px;
 }
 
 button {

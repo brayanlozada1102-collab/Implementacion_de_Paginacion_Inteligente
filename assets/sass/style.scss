@@ -39,6 +39,13 @@ body {
 
 header {
   margin-bottom: 20px;
+  top: 0;
+  z-index: 999;
+  position: sticky;
+  background-color: #1e1e2f96;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+
 
   h1 {
     color: $primary;
@@ -135,6 +142,14 @@ header {
 // ======================================================
 // PAGINATION BUTTONS
 // ======================================================
+.pagination {
+  bottom: 0;
+  z-index: 999;
+  position: sticky;
+  background-color: #1e1e2f;
+  padding: 20px;
+
+}
 
 button {
   background-color: $primary;
