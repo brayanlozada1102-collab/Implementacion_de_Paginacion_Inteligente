@@ -41,34 +41,44 @@ requestData(url_api);
 // BUTTONS (NEXT / PREV)
 // ======================================================
 
-function setButtons(info) {
 
+let isProcessing = false;
+
+function setButtons(info) {
     btnPrev.disabled = (info.prev === null);
     btnNext.disabled = (info.next === null);
 
-    btnNext.onclick = function () {
-        if (info.next) {
-            requestData(info.next);
-            let loading = document.querySelector(".loading");
-            loading.classList.toggle("show");
+    const executeAction = async (url) => {
+        if (isProcessing || !url) return;
 
-            setTimeout(() => {
-                loading.classList.remove("show");
-            }, 1000);
+        isProcessing = true;
+        btnNext.disabled = true;
+        btnPrev.disabled = true;
+
+        let loading = document.querySelector(".loading");
+        loading.classList.add("show");
+
+        try {
+
+            const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+            await Promise.all([
+                requestData(url),
+                delay(1000)
+            ]);
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+
+            isProcessing = false;
+            loading.classList.remove("show");
         }
     };
 
-    btnPrev.onclick = function () {
-        if (info.prev) {
-            requestData(info.prev);
-            let loading = document.querySelector(".loading");
-            loading.classList.toggle("show");
+    btnNext.onclick = () => executeAction(info.next);
+    btnPrev.onclick = () => executeAction(info.prev);
 
-            setTimeout(() => {
-                loading.classList.remove("show");
-            }, 1000);
-        }
-    };
 
     let match = info.next ? info.next.match(/page=(\d+)/) : null;
     let currentPage = match ? parseInt(match[1]) - 1 : info.pages;
